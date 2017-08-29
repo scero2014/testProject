@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlType;
 import lombok.Getter;
 import lombok.Setter;
 
-@XmlRootElement
+@XmlRootElement(namespace = "http://net.scero.test.ws")
 @XmlType(namespace = "http://net.scero.test.ws")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Getter

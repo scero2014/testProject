@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import net.scero.test.controllers.IPAddressBasedAuthenticationProvider;
 
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
@@ -25,6 +26,7 @@ import net.scero.test.controllers.IPAddressBasedAuthenticationProvider;
   @Override
   protected void configure(HttpSecurity http) throws Exception {
       http.authorizeRequests().anyRequest().permitAll().and().formLogin().and().logout();
+      http.csrf().disable();
   }
   
   @Autowired

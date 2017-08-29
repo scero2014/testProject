@@ -5,15 +5,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
-import org.springframework.xml.xsd.XsdSchemaCollection;
-import org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection;
 
 
 @EnableWs
@@ -35,23 +32,13 @@ public class WebserviceConfig extends WsConfigurerAdapter {
         wsdl11Definition.setPortTypeName("operationTest");
         wsdl11Definition.setLocationUri("/ws/");
         wsdl11Definition.setTargetNamespace(NAMESPACE_URI);
-        wsdl11Definition.setSchemaCollection(collectionSchema());
+        wsdl11Definition.setSchema(countriesSchema());
         return wsdl11Definition;
     }
 
     @Bean
     public XsdSchema countriesSchema() {
-        //        CommonsXsdSchemaCollection schemes = new CommonsXsdSchemaCollection();
-        //        schemes.setXsds(new ClassPathResource("schema.xsd"), new ClassPathResource("operations.xsd"));
-        //        
-        //        return schemes;
+        // return new SimpleXsdSchema(new ClassPathResource("operations.xsd"));
         return new SimpleXsdSchema(new ClassPathResource("schema.xsd"));
-    }
-    
-    @Bean
-    public XsdSchemaCollection collectionSchema() {
-        CommonsXsdSchemaCollection collection = new CommonsXsdSchemaCollection(new Resource[] { new ClassPathResource("schema.xsd") });
-        collection.setInline(true);
-        return collection;
     }
 }

@@ -12,14 +12,14 @@ import javax.xml.bind.annotation.XmlType;
 import lombok.Getter;
 import lombok.Setter;
 
-@XmlRootElement
+@XmlRootElement(namespace = "http://net.scero.test.ws")
 @XmlType(namespace = "http://net.scero.test.ws")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Getter
 @Setter
 public class TestRQ implements Serializable{
     private static final long serialVersionUID = -7055613484237382272L;
-
+    
     @XmlElement(required = true, defaultValue = "default")
     private String name;
     @XmlAttribute(required = true)
