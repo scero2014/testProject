@@ -1,0 +1,47 @@
+{
+  "kind": "BuildConfig",
+    "apiVersion": "v1",
+    "metadata": {
+      "name": "spring-boot-sample-build" 1
+    },
+  "spec": {
+    "triggers": [ 
+      {
+        "type": "GitHub",
+        "github": {
+          "secret": "secret101"
+        }
+      },
+      {
+        "type": "Generic",
+        "generic": {
+          "secret": "secret101"
+        }
+      },
+      {
+        "type": "ImageChange"
+      }
+    ],
+    "source": { 
+      "type": "Git",
+      "git": {
+        "uri": "https://github.com/scero2014/testProject"
+      }
+    },
+    "strategy": { 
+      "type": "Source",
+      "sourceStrategy": {
+        "from": {
+          "kind": "ImageStreamTag",
+          "name": "springboot-maven3-centos:latest"
+        }
+      }
+    },
+    "output": { 
+      "to": {
+        "kind": "ImageStreamTag",
+        "name": "origin-spring-boot-sample:latest"
+      }
+    }
+  }
+}
