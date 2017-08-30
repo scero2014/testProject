@@ -109,7 +109,7 @@ public class ExampleController {
 
             sb.append("Fichero: /testproject/data/prueba.txt <br/>");
             sb.append(processFile(new File("/testproject/data/prueba.txt")));
-            sb.append("<br/><br/>");
+            sb.append("<br/><br/>"); 
             
             result = sb.toString();
 
