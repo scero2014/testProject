@@ -105,7 +105,7 @@ public class ExampleController {
             } else if (!file.canWrite()) {
                 result = "No se puede escribir";
             } else {
-                BufferedWriter oWriter = new BufferedWriter(new FileWriter(file));
+                BufferedWriter oWriter = new BufferedWriter(new FileWriter(file), true);
                 oWriter.write("Un pollo <br/>");
                 oWriter.close();
 
