@@ -93,7 +93,6 @@ public class ExampleController {
         String result;
         HttpStatus httpStatus;
         try {
-            File file = new File("prueba.txt");
             StringBuilder sb = new StringBuilder();
             
             sb.append("Fichero: prueba.txt <br/>");
@@ -111,6 +110,8 @@ public class ExampleController {
             sb.append("Fichero: /testproject/data/prueba.txt <br/>");
             sb.append(processFile(new File("/testproject/data/prueba.txt")));
             sb.append("<br/><br/>");
+            
+            result = sb.toString();
 
             httpStatus = HttpStatus.OK;
         } catch (Exception e) {
