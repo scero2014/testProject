@@ -69,9 +69,9 @@ public class ExampleController {
             result = e.toString();
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return new ResponseEntity<String>(result, headers, httpStatus);        
+        return new ResponseEntity<String>(result, headers, httpStatus);
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/ip")
     @RolesAllowed("ROLE_IP")
     public ResponseEntity<String> securityIpTestEndpoint(HttpServletRequest request) {
@@ -84,7 +84,7 @@ public class ExampleController {
             result = e.toString();
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);        
+        return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/storage")
@@ -95,20 +95,24 @@ public class ExampleController {
             File file = new File("prueba.txt");
             if (!file.exists()) {
                 file.createNewFile();
-                result = "File creado";
+                if (!file.exists()) {
+                    result = "Se intenta crear file, pero no se puede";
+                } else {
+                    result = "File creado";
+                }
             } else if (!file.canRead()) {
                 result = "No se puede leer";
             } else if (!file.canWrite()) {
                 result = "No se puede escribir";
             } else {
                 BufferedWriter oWriter = new BufferedWriter(new FileWriter(file));
-                oWriter.write ("Un pollo <br/>");
+                oWriter.write("Un pollo <br/>");
                 oWriter.close();
-                
+
                 StringBuilder sb = new StringBuilder();
                 BufferedReader oReader = new BufferedReader(new FileReader(file));
                 String line = oReader.readLine();
-                while(line != null){
+                while (line != null) {
                     sb.append(line);
                     line = oReader.readLine();
                 }
@@ -120,7 +124,7 @@ public class ExampleController {
             result = e.toString();
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);                
+        return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);
     }
 
     //---- Private Methods ----//
