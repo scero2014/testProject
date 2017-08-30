@@ -113,6 +113,7 @@ public class ExampleController {
                     line = oReader.readLine();
                 }
                 oReader.close();
+                result = sb.toString();
             }
             httpStatus = HttpStatus.OK;
         } catch (Exception e) {
