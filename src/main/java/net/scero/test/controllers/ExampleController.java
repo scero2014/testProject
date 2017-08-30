@@ -94,6 +94,7 @@ public class ExampleController {
         try {
             File file = new File("prueba.txt");
             if (!file.exists()) {
+                file.createNewFile();
                 result = "File creado";
             } else if (!file.canRead()) {
                 result = "No se puede leer";
