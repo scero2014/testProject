@@ -34,7 +34,7 @@
         "from": {
           "kind": "ImageStreamTag",
           "name": "springboot-maven3-centos:latest"
-        }
+        } 
       }
     },
     "output": { 
