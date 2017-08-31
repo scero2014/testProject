@@ -3,10 +3,18 @@ info:
   version: 1.0
 
 # MONGODB (MongoProperties)
-spring.data.mongodb.uri=mongodb://scero:Dragon@mongodb/sampledb  # Mongo database URI. Cannot be set with host, port and credentials.
-spring.data.mongodb.database=sampledb # Database name.
-spring.data.mongodb.username=scero # Login user of the mongo server. Cannot be set with uri.
-spring.data.mongodb.password=Dragon # Login password of the mongo server. Cannot be set with uri.
+spring:
+  data:
+    mongodb:
+      uri: mongodb://scero:Dragon@mongodb/sampledb
+      database: sampledb
+      username: scero
+      password: Dragon
+
+#spring.data.mongodb.uri=mongodb://scero:Dragon@mongodb/sampledb  # Mongo database URI. Cannot be set with host, port and credentials.
+#spring.data.mongodb.database=sampledb # Database name.
+#spring.data.mongodb.username=scero # Login user of the mongo server. Cannot be set with uri.
+#spring.data.mongodb.password=Dragon # Login password of the mongo server. Cannot be set with uri.
 
 #spring.data.mongodb.authentication-database= # Authentication database name.
 #spring.data.mongodb.field-naming-strategy= # Fully qualified name of the FieldNamingStrategy to use.
