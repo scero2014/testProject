@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
 import net.scero.test.mongodb.EntityRepository;
@@ -154,6 +156,14 @@ public class ExampleController {
             } catch (Exception e) {
                 sb.append("Petardazo");
             }
+            sb.append("<br/>").append("findByNameAndAge").append("<br/>");
+            try {
+                for (EntityTest entityTest : entityRepository.findByNameAndAge("Jose", 21)) {
+                    sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
+                }    
+            } catch (Exception e) {
+                sb.append("Petardazo");
+            }
             
             sb.append("<br/>").append("findAll with example").append("<br/>");
             try {
@@ -171,6 +181,14 @@ public class ExampleController {
             while(it.hasNext()){
                 sb.append(it.next()).append("<br/>");
             }
+            
+            MongoCollection<Document> collection = mongoClient.getDatabase("sampledb").getCollection("entityTest");
+            MongoCursor<Document> cursor = collection.find(new Document().append("name", "Jose")).iterator();
+            sb.append("<br/>").append("Busqueda directa por find: ").append("<br/>");
+            while(cursor.hasNext()){
+                sb.append(cursor.next()).append("<br/>");
+            }
+            
             
             result = sb.toString();
             httpStatus = HttpStatus.OK;
