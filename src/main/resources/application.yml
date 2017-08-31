@@ -8,8 +8,8 @@ spring:
     mongodb:
       uri: mongodb://scero:Dragon@mongodb/sampledb
       database: sampledb
-      username: scero
-      password: Dragon
+#      username: scero
+#      password: Dragon
 
 #spring.data.mongodb.uri=mongodb://scero:Dragon@mongodb/sampledb  # Mongo database URI. Cannot be set with host, port and credentials.
 #spring.data.mongodb.database=sampledb # Database name.
