@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.4.RELEASE</version> 
+		<version>1.5.4.RELEASE</version>
 	</parent>
 	<properties>
 		<cxf.version>3.1.12</cxf.version>
-	</properties> 
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -32,6 +32,11 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		<!-- Mongo -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
 		</dependency>
 		<!-- WS -->
 		<dependency>
@@ -120,7 +125,7 @@
 					<outputDirectory>${project.build.directory}/xsd/</outputDirectory>
 					<verbose>true</verbose>
 				</configuration>
-			</plugin> 
+			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
@@ -133,37 +138,13 @@
 						<configuration>
 							<outputDirectory>${project.build.directory}</outputDirectory>
 							<resources>
-								<!-- <resource>
-									<directory>${project.build.directory}/xsd/</directory>
-									<filtering>true</filtering>
-								</resource> -->
-								<!-- <resource>
-									<directory>src/main/resources/</directory>
-									<filtering>true</filtering>
-								</resource> -->
+								<!-- <resource> <directory>${project.build.directory}/xsd/</directory> <filtering>true</filtering> </resource> -->
+								<!-- <resource> <directory>src/main/resources/</directory> <filtering>true</filtering> </resource> -->
 							</resources>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jaxb2-maven-plugin</artifactId>
-				<version>1.6</version>
-				<executions>
-					<execution>
-						<id>xjc</id>
-						<goals>
-							<goal>xjc</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<schemaDirectory>${project.basedir}/src/main/resources/ex/</schemaDirectory>
-					<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-					<clearOutputDir>false</clearOutputDir>
-				</configuration>
-			</plugin> -->
 		</plugins>
 	</build>
 </project>

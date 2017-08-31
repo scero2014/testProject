@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import net.scero.test.mongodb.EntityRepository;
+import net.scero.test.mongodb.EntityTest;
+
 @Controller
 public class ExampleController {
     //---- Variables ----//
+    @Autowired
+    private EntityRepository entityRepository;
 
     //---- Constructors ----//
 
@@ -113,6 +119,25 @@ public class ExampleController {
             
             result = sb.toString();
 
+            httpStatus = HttpStatus.OK;
+        } catch (Exception e) {
+            result = e.toString();
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/mongo")
+    public ResponseEntity<String> mongoEndpoint(HttpServletRequest request) {
+        String result;
+        HttpStatus httpStatus;
+        try {
+            entityRepository.save(new EntityTest("Jose", 21));
+            StringBuilder sb = new StringBuilder();
+            for (EntityTest entityTest : entityRepository.findAll()) {
+                sb.append("Elemento: ").append(entityTest.toString());
+            }
+            result = sb.toString();
             httpStatus = HttpStatus.OK;
         } catch (Exception e) {
             result = e.toString();
