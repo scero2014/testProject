@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCursor;
+
 import net.scero.test.mongodb.EntityRepository;
 import net.scero.test.mongodb.EntityTest;
 
@@ -28,6 +31,9 @@ public class ExampleController {
     //---- Variables ----//
     @Autowired
     private EntityRepository entityRepository;
+
+    @Autowired
+    private MongoClient mongoClient;
 
     //---- Constructors ----//
 
@@ -160,6 +166,11 @@ public class ExampleController {
                 sb.append("Petardazo");
             }
             
+            MongoCursor<String> it = mongoClient.getDatabase("sampledb").listCollectionNames().iterator();
+            sb.append("<br/>").append("listCollectionNames: ").append("<br/>");
+            while(it.hasNext()){
+                sb.append(it.next()).append("<br/>");
+            }
             
             result = sb.toString();
             httpStatus = HttpStatus.OK;
