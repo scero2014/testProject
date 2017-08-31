@@ -11,7 +11,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -133,11 +133,34 @@ public class ExampleController {
         String result;
         HttpStatus httpStatus;
         try {
-            entityRepository.save(new EntityTest("Jose", 21));
+            entityRepository.save(new EntityTest("Jose", 20));
             StringBuilder sb = new StringBuilder();
+            sb.append("findAll <br/>");
             for (EntityTest entityTest : entityRepository.findAll()) {
-                sb.append("Elemento: ").append(entityTest.toString());
+                sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
             }
+            
+            sb.append("<br/>").append("findByAge").append("<br/>");
+            try {
+                for (EntityTest entityTest : entityRepository.findByAge(21)) {
+                    sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
+                }    
+            } catch (Exception e) {
+                sb.append("Petardazo");
+            }
+            
+            sb.append("<br/>").append("findAll with example").append("<br/>");
+            try {
+                EntityTest filter = new EntityTest();
+                filter.setAge(20);
+                for (EntityTest entityTest : entityRepository.findAll(Example.of(filter))) {
+                    sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
+                }    
+            } catch (Exception e) {
+                sb.append("Petardazo");
+            }
+            
+            
             result = sb.toString();
             httpStatus = HttpStatus.OK;
         } catch (Exception e) {
