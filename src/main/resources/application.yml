@@ -2,12 +2,16 @@ info:
   description: testProyect
   version: 1.0
 
-# MONGODB (MongoProperties)
-spring:
-  data:
-    mongodb:
-      uri: mongodb://scero:Dragon@mongodb/sampledb
-      database: sampledb
+server:
+  port: 8080
+  context-path: /
+
+management:
+  context-path: /manage
+  security:
+    enabled: false
+    roles: ACTUATOR
+    
 
 endpoints:
   enabled: true
@@ -23,3 +27,10 @@ endpoints:
     sensitive: false
   mappings:
     enabled: true
+
+# MONGODB (MongoProperties)
+spring:
+  data:
+    mongodb:
+      uri: mongodb://scero:Dragon@mongodb/sampledb
+      database: sampledb

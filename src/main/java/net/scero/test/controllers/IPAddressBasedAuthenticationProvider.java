@@ -26,6 +26,9 @@ public class IPAddressBasedAuthenticationProvider implements AuthenticationProvi
         if ("user".equals(name) && "password".equals(password)){
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             System.out.println("Ok ADMIN");
+        } else if ("actuator".equals(name) && "actuator".equals(password)) {
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_ACTUATOR"));
+            System.out.println("Ok ACTUATOR");
         }
 
         WebAuthenticationDetails wad = (WebAuthenticationDetails) authentication.getDetails();
