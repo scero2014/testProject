@@ -149,6 +149,7 @@
 					<verbose>true</verbose>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
@@ -168,6 +169,22 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<!-- Permite que la app tenga acceso a los datos del commit -->
+			<plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 </project>

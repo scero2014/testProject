@@ -1,6 +1,11 @@
 info:
   description: testProyect
   version: 1.0
+  git:
+    commitID: ${git.commit.id}
+    commit:
+      user:
+        name: ${git.commit.user.name}
 
 server:
   port: 8080
@@ -11,8 +16,11 @@ management:
   security:
     enabled: false
     roles: ACTUATOR
+  info:
+    git:
+      enabled: true
+      mode: simple
     
-
 endpoints:
   enabled: true
   env:
