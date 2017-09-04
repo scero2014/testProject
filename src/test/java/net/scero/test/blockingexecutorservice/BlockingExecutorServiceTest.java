@@ -10,6 +10,7 @@ import java.util.concurrent.Semaphore;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class BlockingExecutorServiceTest {
     private int results;
 
