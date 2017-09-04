@@ -38,8 +38,8 @@ public class ExampleController {
     @Autowired
     private EntityRepository entityRepository;
 
-    @Autowired
-    private MongoClient mongoClient;
+//    @Autowired
+//    private MongoClient mongoClient;
 
     @Autowired
     private TestDBMapper testDBMapper;
@@ -143,68 +143,68 @@ public class ExampleController {
         return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/mongo")
-    public ResponseEntity<String> mongoEndpoint(HttpServletRequest request) {
-        String result;
-        HttpStatus httpStatus;
-        try {
-            entityRepository.save(new EntityTest("Jose", 20));
-            StringBuilder sb = new StringBuilder();
-            sb.append("findAll <br/>");
-            for (EntityTest entityTest : entityRepository.findAll()) {
-                sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
-            }
-            
-            sb.append("<br/>").append("findByAge").append("<br/>");
-            try {
-                for (EntityTest entityTest : entityRepository.findByAge(21)) {
-                    sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
-                }    
-            } catch (Exception e) {
-                sb.append("Petardazo");
-            }
-            sb.append("<br/>").append("findByNameAndAge").append("<br/>");
-            try {
-                for (EntityTest entityTest : entityRepository.findByNameAndAge("Jose", 21)) {
-                    sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
-                }    
-            } catch (Exception e) {
-                sb.append("Petardazo");
-            }
-            
-            sb.append("<br/>").append("findAll with example").append("<br/>");
-            try {
-                EntityTest filter = new EntityTest();
-                filter.setAge(20);
-                for (EntityTest entityTest : entityRepository.findAll(Example.of(filter))) {
-                    sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
-                }    
-            } catch (Exception e) {
-                sb.append("Petardazo");
-            }
-            
-            MongoCursor<String> it = mongoClient.getDatabase("sampledb").listCollectionNames().iterator();
-            sb.append("<br/>").append("listCollectionNames: ").append("<br/>");
-            while(it.hasNext()){
-                sb.append(it.next()).append("<br/>");
-            }
-            
-            MongoCollection<Document> collection = mongoClient.getDatabase("sampledb").getCollection("entityTest");
-            MongoCursor<Document> cursor = collection.find(new Document().append("name", "Jose")).iterator();
-            sb.append("<br/>").append("Busqueda directa por find: ").append("<br/>");
-            while(cursor.hasNext()){
-                sb.append(cursor.next()).append("<br/>");
-            }
-            
-            
-            result = sb.toString();
-            httpStatus = HttpStatus.OK;
-        } catch (Exception e) {
-            result = e.toString();
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-        return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);
-    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/mongo")
+//    public ResponseEntity<String> mongoEndpoint(HttpServletRequest request) {
+//        String result;
+//        HttpStatus httpStatus;
+//        try {
+//            entityRepository.save(new EntityTest("Jose", 20));
+//            StringBuilder sb = new StringBuilder();
+//            sb.append("findAll <br/>");
+//            for (EntityTest entityTest : entityRepository.findAll()) {
+//                sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
+//            }
+//            
+//            sb.append("<br/>").append("findByAge").append("<br/>");
+//            try {
+//                for (EntityTest entityTest : entityRepository.findByAge(21)) {
+//                    sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
+//                }    
+//            } catch (Exception e) {
+//                sb.append("Petardazo");
+//            }
+//            sb.append("<br/>").append("findByNameAndAge").append("<br/>");
+//            try {
+//                for (EntityTest entityTest : entityRepository.findByNameAndAge("Jose", 21)) {
+//                    sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
+//                }    
+//            } catch (Exception e) {
+//                sb.append("Petardazo");
+//            }
+//            
+//            sb.append("<br/>").append("findAll with example").append("<br/>");
+//            try {
+//                EntityTest filter = new EntityTest();
+//                filter.setAge(20);
+//                for (EntityTest entityTest : entityRepository.findAll(Example.of(filter))) {
+//                    sb.append("Elemento: ").append(entityTest.toString()).append("<br/>");
+//                }    
+//            } catch (Exception e) {
+//                sb.append("Petardazo");
+//            }
+//            
+//            MongoCursor<String> it = mongoClient.getDatabase("sampledb").listCollectionNames().iterator();
+//            sb.append("<br/>").append("listCollectionNames: ").append("<br/>");
+//            while(it.hasNext()){
+//                sb.append(it.next()).append("<br/>");
+//            }
+//            
+//            MongoCollection<Document> collection = mongoClient.getDatabase("sampledb").getCollection("entityTest");
+//            MongoCursor<Document> cursor = collection.find(new Document().append("name", "Jose")).iterator();
+//            sb.append("<br/>").append("Busqueda directa por find: ").append("<br/>");
+//            while(cursor.hasNext()){
+//                sb.append(cursor.next()).append("<br/>");
+//            }
+//            
+//            
+//            result = sb.toString();
+//            httpStatus = HttpStatus.OK;
+//        } catch (Exception e) {
+//            result = e.toString();
+//            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+//        }
+//        return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);
+//    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/postgres")
     public ResponseEntity<String> postgresEndpoint(HttpServletRequest request) {
