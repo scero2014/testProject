@@ -35,8 +35,9 @@ import net.scero.test.mongodb.EntityTest;
 @Controller
 public class ExampleController {
     //---- Variables ----//
-    @Autowired
-    private EntityRepository entityRepository;
+    // Para mongo
+//    @Autowired
+//    private EntityRepository entityRepository;
 
 //    @Autowired
 //    private MongoClient mongoClient;

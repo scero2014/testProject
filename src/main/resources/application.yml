@@ -37,11 +37,11 @@ endpoints:
     enabled: true
 
 # MONGODB (MongoProperties)
-#spring:
-#  data:
-#    mongodb:
-#      uri: mongodb://scero:Dragon@mongodb/sampledb
-#      database: sampledb
+spring:
+  data:
+    mongodb:
+      uri: mongodb://scero:Dragon@mongodb/sampledb
+      database: sampledb
 
 # Postgres
 datasources:

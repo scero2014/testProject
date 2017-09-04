@@ -22,10 +22,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableSwagger2
 @EnableWs
-@EnableAutoConfiguration(exclude = {
-        MongoAutoConfiguration.class, MongoDataAutoConfiguration.class
-    })
-
 public class ApplicationTest {
     public static void main(String[] args) {
         SpringApplication.run(ApplicationTest.class, args);
