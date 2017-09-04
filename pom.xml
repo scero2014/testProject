@@ -94,8 +94,7 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-typehandlers-jsr310</artifactId>
 			<version>1.0.2</version>
-		</dependency>
-		
+		</dependency>		
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
