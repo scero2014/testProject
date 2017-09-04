@@ -54,5 +54,5 @@ datasources:
     maxLifetime: 1200000
     maximumPoolSize: 10
     minimumIdle: 1
-    schema: aif2_pub_ws
+    schema: sampledb
     registerMbeans: true
