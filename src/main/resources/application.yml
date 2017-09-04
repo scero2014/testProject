@@ -37,8 +37,22 @@ endpoints:
     enabled: true
 
 # MONGODB (MongoProperties)
-spring:
-  data:
-    mongodb:
-      uri: mongodb://scero:Dragon@mongodb/sampledb
-      database: sampledb
+#spring:
+#  data:
+#    mongodb:
+#      uri: mongodb://scero:Dragon@mongodb/sampledb
+#      database: sampledb
+
+# Postgres
+datasources:
+  postgresql:
+    jdbcUrl: jdbc:postgresql://postgresql:5432/sampledb
+    driverClassName: org.postgresql.Driver
+    username: scero
+    password: Dragon
+    poolName: AtlasHikariCP
+    maxLifetime: 1200000
+    maximumPoolSize: 10
+    minimumIdle: 1
+    schema: aif2_pub_ws
+    registerMbeans: true

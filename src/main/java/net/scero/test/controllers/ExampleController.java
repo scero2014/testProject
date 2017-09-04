@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
+import net.scero.test.db.mappers.TestDBMapper;
+import net.scero.test.db.pojos.ExampleDBTuple;
 import net.scero.test.mongodb.EntityRepository;
 import net.scero.test.mongodb.EntityTest;
 
@@ -37,6 +41,9 @@ public class ExampleController {
     @Autowired
     private MongoClient mongoClient;
 
+    @Autowired
+    private TestDBMapper testDBMapper;
+    
     //---- Constructors ----//
 
     //---- Public Methods ----//
@@ -189,6 +196,41 @@ public class ExampleController {
                 sb.append(cursor.next()).append("<br/>");
             }
             
+            
+            result = sb.toString();
+            httpStatus = HttpStatus.OK;
+        } catch (Exception e) {
+            result = e.toString();
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/postgres")
+    public ResponseEntity<String> postgresEndpoint(HttpServletRequest request) {
+        String result;
+        HttpStatus httpStatus;
+        try {
+            testDBMapper.createTableIfNotExist();
+            
+            List<ExampleDBTuple> elements = testDBMapper.findAll("jose");
+            int id;
+            if (!elements.isEmpty()) {
+                id = elements.stream().map(e -> e.getId()).max(Comparator.comparing(e -> e)).get() + 1;
+            } else {
+                id = 1;
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.append("El siguiente id: ").append(id).append("<br/><br/>");
+            
+            ExampleDBTuple exampleDBTuple = new ExampleDBTuple();
+            exampleDBTuple.setNombre(new StringBuilder().append("jose n.").append(id).toString());
+            exampleDBTuple.setEdadElemento(10 + id);
+            testDBMapper.create(id, exampleDBTuple);
+            
+            for(ExampleDBTuple item : testDBMapper.findAll("jose")) {
+                sb.append(item).append("<br/>");
+            }
             
             result = sb.toString();
             httpStatus = HttpStatus.OK;
