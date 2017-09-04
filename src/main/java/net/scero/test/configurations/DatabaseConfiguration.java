@@ -10,6 +10,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -20,6 +21,7 @@ import net.scero.test.db.handlers.BooleanTypeHandler;
 import net.scero.test.db.mappers.TestDBMapper;
 
 @Slf4j
+@Configuration
 public class DatabaseConfiguration {
     /**
      * Database bean
