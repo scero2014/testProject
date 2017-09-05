@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.mongodb.DB;
 
-@Configuration
+//@Configuration
 public class MongoOffConfiguration {
     @Bean
     public MongoTemplate mongoTemplate() {
