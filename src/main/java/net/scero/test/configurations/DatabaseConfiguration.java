@@ -21,7 +21,7 @@ import net.scero.test.db.handlers.BooleanTypeHandler;
 import net.scero.test.db.mappers.TestDBMapper;
 
 @Slf4j
-@Configuration
+// @Configuration
 public class DatabaseConfiguration {
     /**
      * Database bean
