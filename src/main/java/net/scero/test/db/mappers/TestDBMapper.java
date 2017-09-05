@@ -27,12 +27,12 @@ public interface TestDBMapper {
     class UserSqlBuilder {
         public String createTableIfNotExist() {
             StringBuilder sb = new StringBuilder();
-            sb.append("CREATE TABLE if not exists ExampleTable {").append(System.lineSeparator());
+            sb.append("CREATE TABLE if not exists ExampleTable (").append(System.lineSeparator());
             sb.append("id NUMERIC(8) not null,").append(System.lineSeparator());
             sb.append("nombre VARCHAR(3) NOT NULL,").append(System.lineSeparator());
             sb.append("edad_elemento numeric(3),").append(System.lineSeparator());
             sb.append("PRIMARY KEY (id)").append(System.lineSeparator());
-            sb.append("};");
+            sb.append(");");
             return sb.toString();
         }
     }
