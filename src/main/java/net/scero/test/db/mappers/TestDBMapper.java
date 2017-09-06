@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.session.ResultHandler;
 
 import net.scero.test.db.pojos.ExampleDBTuple;
 
@@ -19,6 +20,8 @@ public interface TestDBMapper {
     @Select("select id, nombre, edad_elemento from ExampleTable where nombre like '%' || #{nombre} || '%'")
     public List<ExampleDBTuple> findAll(@Param("nombre") final String nombre);
 
+    @Select("select id, nombre, edad_elemento from ExampleTable where nombre like '%' || #{nombre} || '%'")
+    public void findAll(@Param("nombre") final String nombre, ResultHandler<ExampleDBTuple> resultHandler);
     
     /**
      * Construye las sentencias sql

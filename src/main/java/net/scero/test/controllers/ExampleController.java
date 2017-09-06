@@ -12,6 +12,8 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.session.ResultContext;
+import org.apache.ibatis.session.ResultHandler;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -27,6 +29,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
+import lombok.Getter;
 import net.scero.test.db.mappers.TestDBMapper;
 import net.scero.test.db.pojos.ExampleDBTuple;
 import net.scero.test.mongodb.EntityRepository;
@@ -232,6 +235,11 @@ public class ExampleController {
                 sb.append(item).append("<br/>");
             }
 
+            sb.append("--- Acceso por handler ---<br/>");
+            UserHandler userHandler = new UserHandler();
+            testDBMapper.findAll("jose", userHandler);
+            sb.append("Suma de todas las edades: ").append(userHandler.getSumaEdades()).append("<br/>");
+
             result = sb.toString();
             httpStatus = HttpStatus.OK;
         } catch (Exception e) {
@@ -275,5 +283,22 @@ public class ExampleController {
             result = e.toString();
         }
         return result;
+    }
+
+    //---- Private Classes ----//
+    class UserHandler implements ResultHandler<ExampleDBTuple> {
+        @Getter
+        private int sumaEdades;
+        
+        public UserHandler() {
+            sumaEdades = 0;
+        }
+
+        @Override
+        public void handleResult(ResultContext<? extends ExampleDBTuple> arg0) {
+            ExampleDBTuple exampleDBTuple = arg0.getResultObject();
+            sumaEdades += exampleDBTuple.getEdadElemento();            
+        }
+
     }
 }
