@@ -13,7 +13,7 @@ public interface TestDBMapper {
     @InsertProvider(type = UserSqlBuilder.class, method = "createTableIfNotExist")
     public void createTableIfNotExist();
 
-    @Insert("insert into aif2_t_client_classification(id, nombre, edad_elemento) VALUES (#{id}, #{exampleDBTuple.nombre}, #{exampleDBTuple.edadElemento})")
+    @Insert("insert into ExampleTable(id, nombre, edad_elemento) VALUES (#{id}, #{exampleDBTuple.nombre}, #{exampleDBTuple.edadElemento})")
     public void create(@Param("id") int id, @Param("exampleDBTuple") ExampleDBTuple exampleDBTuple);
 
     @Select("select id, nombre, edad_elemento from ExampleTable where nombre like '%nombre%'")
