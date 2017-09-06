@@ -16,7 +16,7 @@ public interface TestDBMapper {
     @Insert("insert into ExampleTable(id, nombre, edad_elemento) VALUES (#{id}, #{exampleDBTuple.nombre}, #{exampleDBTuple.edadElemento})")
     public void create(@Param("id") int id, @Param("exampleDBTuple") ExampleDBTuple exampleDBTuple);
 
-    @Select("select id, nombre, edad_elemento from ExampleTable where nombre like '%#{nombre}%'")
+    @Select("select id, nombre, edad_elemento from ExampleTable where nombre like '%' + #{nombre} + '%'")
     public List<ExampleDBTuple> findAll(@Param("nombre") final String nombre);
 
     
