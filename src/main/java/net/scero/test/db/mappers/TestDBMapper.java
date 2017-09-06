@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.ResultHandler;
 
@@ -21,6 +22,7 @@ public interface TestDBMapper {
     public List<ExampleDBTuple> findAll(@Param("nombre") final String nombre);
 
     @Select("select id, nombre, edad_elemento from ExampleTable where nombre like '%' || #{nombre} || '%'")
+    @ResultMap("ExampleDBTuple")
     void findAllHandler(@Param("nombre") final String nombre, ResultHandler<ExampleDBTuple> resultHandler);
     
     /**
