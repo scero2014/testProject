@@ -16,7 +16,7 @@ public interface TestDBMapper {
     @Insert("insert into ExampleTable(id, nombre, edad_elemento) VALUES (#{id}, #{exampleDBTuple.nombre}, #{exampleDBTuple.edadElemento})")
     public void create(@Param("id") int id, @Param("exampleDBTuple") ExampleDBTuple exampleDBTuple);
 
-    @Select("select id, nombre, edad_elemento from ExampleTable where nombre like '%nombre%'")
+    @Select("select id, nombre, edad_elemento from ExampleTable where nombre like '%#{nombre}%'")
     public List<ExampleDBTuple> findAll(@Param("nombre") final String nombre);
 
     
@@ -29,7 +29,7 @@ public interface TestDBMapper {
             StringBuilder sb = new StringBuilder();
             sb.append("CREATE TABLE if not exists ExampleTable (").append(System.lineSeparator());
             sb.append("id NUMERIC(8) not null,").append(System.lineSeparator());
-            sb.append("nombre VARCHAR(3) NOT NULL,").append(System.lineSeparator());
+            sb.append("nombre VARCHAR(30) NOT NULL,").append(System.lineSeparator());
             sb.append("edad_elemento numeric(3),").append(System.lineSeparator());
             sb.append("PRIMARY KEY (id)").append(System.lineSeparator());
             sb.append(");");
