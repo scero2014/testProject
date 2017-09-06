@@ -22,7 +22,7 @@ public interface TestDBMapper {
     public List<ExampleDBTuple> findAll(@Param("nombre") final String nombre);
 
     @Select("select id, nombre, edad_elemento from ExampleTable where nombre like '%' || #{nombre} || '%'")
-    @ResultMap("ExampleDBTuple")
+    @ResultMap("net.scero.test.db.pojos.ExampleDBTuple")
     void findAllHandler(@Param("nombre") final String nombre, ResultHandler<ExampleDBTuple> resultHandler);
     
     /**
