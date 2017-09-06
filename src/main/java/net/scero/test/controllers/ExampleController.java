@@ -237,7 +237,7 @@ public class ExampleController {
 
             sb.append("--- Acceso por handler ---<br/>");
             UserHandler userHandler = new UserHandler();
-            testDBMapper.findAll("jose", userHandler);
+            testDBMapper.findAllHandler("jose", userHandler);
             sb.append("Suma de todas las edades: ").append(userHandler.getSumaEdades()).append("<br/>");
 
             result = sb.toString();

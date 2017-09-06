@@ -21,7 +21,7 @@ public interface TestDBMapper {
     public List<ExampleDBTuple> findAll(@Param("nombre") final String nombre);
 
     @Select("select id, nombre, edad_elemento from ExampleTable where nombre like '%' || #{nombre} || '%'")
-    public void findAll(@Param("nombre") final String nombre, ResultHandler<ExampleDBTuple> resultHandler);
+    void findAllHandler(@Param("nombre") final String nombre, ResultHandler<ExampleDBTuple> resultHandler);
     
     /**
      * Construye las sentencias sql
