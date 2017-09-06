@@ -51,6 +51,7 @@ public class DatabaseConfiguration {
             org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getConfiguration();
             configuration.setMapUnderscoreToCamelCase(true);
             configuration.setJdbcTypeForNull(JdbcType.NULL);
+            configuration.setSafeResultHandlerEnabled(false); // Se usa para poder trabajar con handlers
             setMappers(configuration);
             return sqlSessionFactoryBean.getObject();
         } catch (Exception e) {
