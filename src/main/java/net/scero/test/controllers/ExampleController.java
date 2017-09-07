@@ -248,6 +248,7 @@ public class ExampleController {
                     testDBMapper.findAllHandler("jose", this);
                 }
             };
+            th.start();
             
             while((exampleDBTuple = th.next()) != null) {
                 if (exampleDBTuple.getId() >= 5 && exampleDBTuple.getId() <= 8) {
