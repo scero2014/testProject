@@ -30,6 +30,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
 import lombok.Getter;
+import net.scero.test.db.ThreadResultHandler;
 import net.scero.test.db.mappers.TestDBMapper;
 import net.scero.test.db.pojos.ExampleDBTuple;
 import net.scero.test.mongodb.EntityRepository;
@@ -240,6 +241,20 @@ public class ExampleController {
             testDBMapper.findAllHandler("jose", userHandler);
             sb.append("Suma de todas las edades: ").append(userHandler.getSumaEdades()).append("<br/>");
 
+            sb.append("--- Acceso por ThreadResultHandler (id >=5 && id <= 8) ---<br/>");
+            ThreadResultHandler<ExampleDBTuple> th = new ThreadResultHandler<ExampleDBTuple>() {
+                @Override
+                public void query() throws Exception {
+                    testDBMapper.findAllHandler("jose", this);
+                }
+            };
+            
+            while((exampleDBTuple = th.next()) != null) {
+                if (exampleDBTuple.getId() >= 5 && exampleDBTuple.getId() <= 8) {
+                    sb.append(exampleDBTuple).append("<br/>");
+                }
+            }
+
             result = sb.toString();
             httpStatus = HttpStatus.OK;
         } catch (Exception e) {
@@ -289,7 +304,7 @@ public class ExampleController {
     class UserHandler implements ResultHandler<ExampleDBTuple> {
         @Getter
         private int sumaEdades;
-        
+
         public UserHandler() {
             sumaEdades = 0;
         }
@@ -297,7 +312,7 @@ public class ExampleController {
         @Override
         public void handleResult(ResultContext<? extends ExampleDBTuple> arg0) {
             ExampleDBTuple exampleDBTuple = arg0.getResultObject();
-            sumaEdades += exampleDBTuple.getEdadElemento();            
+            sumaEdades += exampleDBTuple.getEdadElemento();
         }
 
     }
