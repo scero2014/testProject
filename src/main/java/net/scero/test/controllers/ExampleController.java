@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +31,12 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import net.scero.test.core.TokenSecurity;
+import net.scero.test.core.User;
 import net.scero.test.db.ThreadResultHandler;
 import net.scero.test.db.mappers.TestDBMapper;
 import net.scero.test.db.pojos.ExampleDBTuple;
@@ -37,6 +44,7 @@ import net.scero.test.mongodb.EntityRepository;
 import net.scero.test.mongodb.EntityTest;
 
 @Controller
+@Slf4j
 public class ExampleController {
     //---- Variables ----//
     // Para mongo
@@ -49,6 +57,9 @@ public class ExampleController {
     @Autowired
     private TestDBMapper     testDBMapper;
 
+    @Resource
+    private TokenSecurity tokenSecurity;
+    
     //---- Constructors ----//
 
     //---- Public Methods ----//
@@ -259,6 +270,44 @@ public class ExampleController {
 
             result = sb.toString();
             httpStatus = HttpStatus.OK;
+        } catch (Exception e) {
+            result = e.toString();
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/createToken/{id}/{user}")
+    public ResponseEntity<String> createToken(HttpServletRequest request, @PathVariable int id, @PathVariable String user) {
+        String result;
+        HttpStatus httpStatus;
+        try {
+            result = tokenSecurity.createJWT(new User(user, id, "WEBUSER"), 30);
+            httpStatus = HttpStatus.OK;
+        } catch (Exception e) {
+            result = e.toString();
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<String>(result, new HttpHeaders(), httpStatus);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/getUserFromToken")
+    public ResponseEntity<String> getUserFromToken(HttpServletRequest request) {
+        String result;
+        HttpStatus httpStatus;
+        String token = request.getHeader("token");
+        try {
+            User user = tokenSecurity.authenticate(token);
+            result = user.toString();
+            httpStatus = HttpStatus.OK;
+        } catch (ExpiredJwtException e) {
+            result = "El tokey " + token + " ha expirado";
+            log.info(result);
+            httpStatus = HttpStatus.UNAUTHORIZED;
+        } catch (JwtException e) {
+            result = "Error de seguridad al intentar auteticar el token " + token;
+            log.info(result, e);
+            httpStatus = HttpStatus.UNAUTHORIZED;
         } catch (Exception e) {
             result = e.toString();
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
