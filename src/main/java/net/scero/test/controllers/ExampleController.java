@@ -248,13 +248,14 @@ public class ExampleController {
                     testDBMapper.findAllHandler("jose", this);
                 }
             };
+
             th.start();
-            
             while((exampleDBTuple = th.next()) != null) {
                 if (exampleDBTuple.getId() >= 5 && exampleDBTuple.getId() <= 8) {
                     sb.append(exampleDBTuple).append("<br/>");
                 }
             }
+            th.release();
 
             result = sb.toString();
             httpStatus = HttpStatus.OK;
