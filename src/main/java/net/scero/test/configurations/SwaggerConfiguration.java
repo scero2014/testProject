@@ -30,7 +30,7 @@ import springfox.documentation.swagger.web.UiConfiguration;
 /**
  * SwaggerConfiguration
  * 
- * @author mhiginio
+ * @author jnogueira
  */
 @Configuration
 public class SwaggerConfiguration extends WebMvcConfigurerAdapter {
